@@ -1049,16 +1049,15 @@ function summary(){
 
 /* boot */
 render();
-/* If this form is embedded in an iframe, tell the host page our height
-   so it can resize the frame to fit, with no inner scrollbars. Harmless when standalone. */
+/* Tell the host page our height so it can resize the iframe to fit.
+   We post only on load and on card-navigation clicks. No ResizeObserver,
+   which would create a feedback loop with the parent resizing us. */
 (function(){
   function postHeight(){
     try{ parent.postMessage({ bsvHeight: document.documentElement.scrollHeight }, "*"); }catch(e){}
   }
   window.addEventListener("load", postHeight);
-  window.addEventListener("resize", postHeight);
-  if(window.ResizeObserver){ try{ new ResizeObserver(postHeight).observe(document.body); }catch(e){} }
-  document.addEventListener("click", function(){ setTimeout(postHeight, 60); }, true);
+  document.addEventListener("click", function(){ setTimeout(postHeight, 120); }, true);
 })();
 </script>
 </body>
