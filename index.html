@@ -398,7 +398,7 @@ function renderMovements(){
   }).join("");
 }
 
-function go(n){ step = n; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function go(n){ step = n; render(); window.scrollTo({top:0,behavior:"smooth"}); try{ parent.postMessage({bsvScrollTop:true},"*"); }catch(e){} }
 function render(){ renderMovements(); stage.innerHTML=""; steps[step](); }
 
 /* helpers ------------------------------------------------- */
